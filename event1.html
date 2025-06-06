@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Skill Up Club</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 40%, #fbc2eb 100%);
+            color: #222;
+            animation: gradientBG 10s ease-in-out infinite alternate;
+            background-size: 200% 200%;
+            min-height: 100vh;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        header {
+            background: linear-gradient(90deg, #0078d7 60%, #00c6fb 100%);
+            color: #fff;
+            padding: 2rem 0 1.5rem 0;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            box-shadow: 0 6px 16px rgba(0, 120, 215, 0.15);
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            animation: fadeInDown 1s;
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2.5rem 0 1.5rem 0;
+        }
+        .tabs button {
+            position: relative;
+            padding: 1rem 2.5rem 1rem 3rem;
+            background: linear-gradient(90deg, #0078d7 60%, #00c6fb 100%);
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 1.15rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: transform 0.25s, background 0.25s, box-shadow 0.25s;
+            box-shadow: 0 4px 16px rgba(0, 120, 215, 0.10);
+            overflow: hidden;
+        }
+        .tabs button::before {
+            content: attr(data-number);
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #fff 60%, #fbc2eb 100%);
+            color: #0078d7;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 2rem;
+            height: 2rem;
+            line-height: 2rem;
+            text-align: center;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 120, 215, 0.15);
+        }
+        .tabs button:hover, .tabs button:focus {
+            background: linear-gradient(90deg, #00c6fb 60%, #0078d7 100%);
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 120, 215, 0.18);
+            outline: none;
+        }
+        .tab-content {
+            display: none;
+            text-align: center;
+            margin-top: 2rem;
+            padding: 2rem 1rem 1.5rem 1rem;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 8px 32px rgba(0, 120, 215, 0.10), 0 1.5px 8px rgba(255, 154, 158, 0.08);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            transform: translateY(30px) scale(0.98);
+            pointer-events: none;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+            animation: fadeInTab 0.7s;
+        }
+        @keyframes fadeInTab {
+            from { opacity: 0; transform: translateY(40px) scale(0.97);}
+            to { opacity: 1; transform: translateY(0) scale(1);}
+        }
+        .back-button {
+            display: block;
+            margin: 2rem auto 1.5rem auto;
+            padding: 0.85rem 2rem;
+            background: linear-gradient(90deg, #0078d7 60%, #00c6fb 100%);
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 220px;
+            transition: transform 0.25s, background 0.25s, box-shadow 0.25s;
+            box-shadow: 0 4px 16px rgba(0, 120, 215, 0.10);
+            border: none;
+            cursor: pointer;
+        }
+        .back-button:hover, .back-button:focus {
+            background: linear-gradient(90deg, #00c6fb 60%, #0078d7 100%);
+            transform: scale(1.07) translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 120, 215, 0.18);
+            outline: none;
+        }
+        h2 {
+            font-size: 2.3rem;
+            color: #0078d7;
+            margin-bottom: 0.7rem;
+            letter-spacing: 1px;
+            animation: fadeInDown 1s;
+        }
+        h3 {
+            font-size: 1.5rem;
+            color: #d72660;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+        figure {
+            margin: 0;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 12px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #fbc2eb 0%, #fad0c4 100%);
+            box-shadow: 0 2px 12px rgba(250, 208, 196, 0.12);
+        }
+        figure:hover {
+            transform: scale(1.04) rotate(-2deg);
+            box-shadow: 0 8px 32px rgba(255, 154, 158, 0.18);
+        }
+        img {
+            border: none;
+            border-radius: 0;
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: filter 0.3s;
+        }
+        figure:hover img {
+            filter: brightness(1.08) saturate(1.2);
+        }
+        figcaption {
+            margin-top: 0.5rem;
+            font-weight: bold;
+            color: #0078d7;
+            background: rgba(255,255,255,0.7);
+            padding: 0.3rem 0;
+            font-size: 1rem;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+        .photos-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        video {
+            border: 4px solid #00c6fb;
+            border-radius: 18px;
+            margin-top: 1rem;
+            background: #fff;
+            box-shadow: 0 4px 16px rgba(0, 120, 215, 0.10);
+            transition: box-shadow 0.3s, border-color 0.3s;
+        }
+        video:hover, video:focus {
+            border-color: #d72660;
+            box-shadow: 0 8px 32px rgba(215, 38, 96, 0.18);
+            outline: none;
+        }
+        .reel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .reel-caption {
+            margin-top: 0.7rem;
+            font-style: italic;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #d72660;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 4px #fad0c4;
+            animation: pulse 2s infinite alternate;
+        }
+        @keyframes pulse {
+            from { color: #d72660; }
+            to { color: #0078d7; }
+        }
+        @media (max-width: 700px) {
+            .tab-content {
+                padding: 1rem 0.2rem;
+            }
+            .photos-flex {
+                gap: 1rem;
+            }
+            video {
+                width: 98vw !important;
+                max-width: 98vw !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Events</h1>
+    </header>
+    <div id="events-list" class="tab-content active">
+        <h2>Events</h2>
+        <div class="tabs">
+            <button onclick="showTab('quiz')" data-number="1">Quiz Competition</button>
+            <button onclick="showTab('ideathon')" data-number="2">Ideathon-2k25</button>
+        </div>
+    </div>
+    <div id="quiz" class="tab-content">
+        <button onclick="showTab('events-list')" class="back-button">Back to Events</button>
+        <h2>Quiz Competition</h2>
+        <p>Participate in our exciting quiz competition and test your knowledge!</p>
+        <h3>Photos</h3>
+        <div class="photos-flex">
+            <figure>
+                <img src="C:\\Users\\Kunal\\Desktop\\sc\\i1.jpg" alt="Quiz Photo 1">
+                <figcaption>Winner Announcement</figcaption>
+            </figure>
+            <figure>
+                <img src="C:\\Users\\Kunal\\Desktop\\sc\\i2.jpg" alt="Quiz Photo 2">
+                <figcaption>Participants in Action</figcaption>
+            </figure>
+        </div>
+        <h3>Videos</h3>
+        <video controls style="width: 350px;">
+            <source src="https://via.placeholder.com/video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <h3>Reels</h3>
+        <div class="reel-container">
+            <video controls style="width: 350px; border: 4px solid #ff9a9e; border-radius: 16px; box-shadow: 0 8px 16px rgba(255,154,158,0.15);">
+                <source src="https://via.placeholder.com/reel.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="reel-caption">
+                Highlights Reel: Best Moments!
+            </div>
+        </div>
+    </div>
+    <div id="ideathon" class="tab-content">
+        <button onclick="showTab('events-list')" class="back-button">Back to Events</button>
+        <h2>Ideathon-2k25</h2>
+        <p>Welcome to Ideathon-2k25! A platform to showcase your innovative ideas and creativity.</p>
+        <h3>Photos</h3>
+        <div class="photos-flex">
+            <figure>
+                <img src="C:\\Users\\Kunal\\Desktop\\sc\\hack1.jpg" alt="Team Brainstorming">
+                <figcaption>Team Brainstorming</figcaption>
+            </figure>
+            <figure>
+                <img src="C:\\Users\\Kunal\\Desktop\\sc\\hack2.jpg" alt="Prototype Demo">
+                <figcaption>Prototype Demo</figcaption>
+            </figure>
+        </div>
+        <h3>Reels</h3>
+        <div class="reel-container">
+            <video controls style="width: 350px; border: 4px solid #fad0c4; border-radius: 16px; box-shadow: 0 8px 16px rgba(250,208,196,0.15);">
+                <source src="C:\\Users\\Kunal\\Desktop\\sc\\hackreel.mp4" type="video/mp4">
+            </video>
+            <div class="reel-caption" style="color:#ff7e5f;">
+                Ideathon Reel: Creative Sparks!
+            </div>
+        </div>
+    </div>
+    <a href="sc.html" class="back-button">Back to Home</a>
+    <script>
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            const selectedTab = document.getElementById(tabId);
+            selectedTab.classList.add('active');
+        }
+    </script>
+</body>
+</html>

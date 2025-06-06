@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team - Skill Up Club</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e3ffe7, #d9e7ff);
+            color: #333;
+        }
+        header {
+            background: #4caf50;
+            color: #fff;
+            padding: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .theme-toggle {
+            position: absolute;
+            left: 1rem;
+            padding: 0.5rem 1rem;
+            background: #333;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .theme-toggle:hover {
+            background: #555;
+        }
+        .dark-theme {
+            background: linear-gradient(135deg, #2c3e50, #4b79a1);
+            color: #f4f4f9;
+        }
+        .dark-theme .team-member {
+            border-color: #555;
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+        }
+        .dark-theme .back-button {
+            background: #555;
+        }
+        .dark-theme .back-button:hover {
+            background: #333;
+        }
+        .dark-theme .theme-toggle {
+            background: #f4f4f9;
+            color: #333;
+        }
+        .dark-theme .theme-toggle:hover {
+            background: #ddd;
+        }
+        .team {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            padding: 1rem;
+        }
+        @keyframes leap {
+            0% {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .team-member {
+            text-align: center;
+            border: 1px solid #4caf50;
+            border-radius: 8px;
+            padding: 1rem;
+            width: 200px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0; /* Initially hidden */
+            animation: leap 0.6s ease-out forwards; /* Apply leap animation */
+        }
+        .team-member:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        .team-member:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .team-member:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+        .team-member:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+        .team-member:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+        .team-member:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+        .team-member:nth-child(7) {
+            animation-delay: 0.7s;
+        }
+        .team-member:nth-child(8) {
+            animation-delay: 0.8s;
+        }
+        .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid #4caf50;
+        }
+        .back-button {
+            display: block;
+            margin: 1rem auto;
+            padding: 0.5rem 1rem;
+            background: #4caf50;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
+            width: 150px;
+        }
+        .back-button:hover {
+            background: #388e3c;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="theme-toggle" id="theme-toggle">Dark Theme</button>
+        <h1>Our Team</h1>
+    </header>
+    <div class="team" id="team-container">
+        <!-- Team members will be dynamically added here -->
+    </div>
+    <a href="sc.html" class="back-button">Back to Home</a>
+    <footer>
+        <p>&copy; 2023 Skill Up Club. All rights reserved.</p>
+    </footer>
+    <script>
+        const teamMembers = [
+            { name: "Akshay Dalavi", role: "President", img: "C:\\Users\\Kunal\\Desktop\\sc\\akshy.jpg" },
+            { name: "Kalpana Singh", role: "Vice President", img: "C:\\Users\\Kunal\\Desktop\\sc\\.jpg" },
+            { name: "Atharva Ambekar", role: "Secretary", img: "C:\\Users\\Kunal\\Desktop\\sc\\omkar.jpg" },
+            { name: "Sidra Chaudhari", role: "Co-Secretary", img: "C:\\Users\\Kunal\\Desktop\\sc\\sidra.jpg" },
+            { name: "Pranav Thormise", role: "Tech Head", img: "C:\\Users\\Kunal\\Desktop\\sc\\pranav.jpg" },
+            { name: "Sahil Pawse", role: "Social Media Head", img: "C:\\Users\\Kunal\\Desktop\\sc\\sahil.jpg" },
+            { name: "Kunal Ahire", role: "Graphic Designer", img: "C:\\Users\\Kunal\\Desktop\\sc\\kunal.jpg" },
+            { name: "Shraddha Sanap", role: "Treasurer", img: "C:\\Users\\Kunal\\Desktop\\sc\\shraddha.jpg" }
+        ];
+
+        function displayTeam() {
+            const teamContainer = document.getElementById('team-container');
+            teamMembers.forEach(member => {
+                const memberDiv = document.createElement('div');
+                memberDiv.className = 'team-member';
+                memberDiv.innerHTML = `
+                    <img src="${member.img}" alt="${member.name}">
+                    <h3>${member.name}</h3>
+                    <p><strong>${member.role}</strong></p>
+                `;
+                teamContainer.appendChild(memberDiv);
+            });
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const toggleButton = document.getElementById('theme-toggle');
+            body.classList.toggle('dark-theme');
+            if (body.classList.contains('dark-theme')) {
+                toggleButton.textContent = 'Light Theme';
+            } else {
+                toggleButton.textContent = 'Dark Theme';
+            }
+        }
+
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+        // Call the function to display the team
+        displayTeam();
+    </script>
+</body>
+</html>
